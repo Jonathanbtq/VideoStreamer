@@ -1,5 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './logo.svg'
+import './App.css'
+import Home from './Home'
 import React, { useState, useEffect } from 'react'
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <p>{userData.name}</p>
           <p>{userData.age}</p>
         </div>)}
+        <Home />
       </header>
     </div>
   );
