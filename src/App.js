@@ -11,7 +11,6 @@ function App() {
     const data = await fetch('/accueil')
     const json = await data.json()
     const msg = json.msg
-
     setMsg(msg)
   }
 
