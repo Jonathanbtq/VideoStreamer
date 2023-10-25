@@ -1,8 +1,14 @@
 import Create from './Create'
 import React, { useEffect, useState } from "react"
+import "./styles/home.css"
 
 function Home(){
     const [todos, setTodos] = useState([])
+
+    const addTask = (tasks) => {
+      setTodos([...todos, tasks])
+      console.log(todos)
+    }
 
     useEffect(() => {
         // Effectuez une requête GET pour obtenir la liste des tâches
@@ -42,30 +48,34 @@ function Home(){
               throw new Error("Erreur lors de la suppression de la tâche");
             }
             // Rechargez la page après une réponse réussie
-            window.location.reload();
+            // window.location.reload();
+            const todosTabCopy = [...todos]
+            const todoCopyUpdated = todosTabCopy.filter((todo) => todo.id !== id)
+
+            setTodos(todoCopyUpdated) 
           })
           .catch((err) => console.log(err));
     };
 
     return (
-        <div>
+        <div className='main_home_div'>
             <h2>To Do List</h2>
-            <Create />
+            <Create addTask={addTask}/>
             {
                 todos.length === 0?
                 <div><h2>No Record</h2></div>
                 :
                 todos.map(todo => (
-                    <div className='task'>
-                        <div onClick={() => handleEdit(todo._id)}>
+                    <div className='task' key={todo.id}>
+                        <div onClick={() => handleEdit(todo.id)}>
                             {todo.done ? 
                                 <p>Test</p>
-                            : <p>X</p>
+                            : <p>o</p>
                             }
                             <p>{todo.task}</p>
                         </div>
                         <div>
-                            <span onCLick={() => handleDelete(todo._id)}>X</span>
+                            <button type="button" onClick={() => handleDelete(todo.id)}>Delete</button>
                         </div>
                     </div>
                 ))

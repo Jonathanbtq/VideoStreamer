@@ -1,0 +1,27 @@
+.main_home_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.task{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    border-bottom: 1px grey solid;
+    width: 40%;
+}
+.task div{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+.task div p{
+    margin-right: 30px;
+}
+.task div p:nth-child(1){
+    cursor: pointer;
+}

@@ -1,10 +1,9 @@
 import React, { useState } from "react"
 
-function Create() {
+function Create(props) {
     const [task, setTask] = useState("")
 
-    const handleAdd = (event) => {
-        event.preventDefault();
+    const handleAdd = () => {
         const requestBody = JSON.stringify({ task })
         
         fetch("http://localhost:3500/add", {
@@ -18,9 +17,11 @@ function Create() {
                 if (!response.ok) {
                     throw new Error("Erreur lors de la requête");
                 }
+                console.log(task)
+                props.addTask(task)
                 setTask("")
                 // Rechargez la page après une réponse réussie
-                window.location.reload();
+                // window.location.reload();
             })
             .catch((err) => console.log(err));
     }
