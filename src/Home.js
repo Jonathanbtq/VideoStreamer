@@ -3,27 +3,49 @@ import React, { useEffect, useState } from "react"
 
 function Home(){
     const [todos, setTodos] = useState([])
+
     useEffect(() => {
-        axios.get('http://localhost:3500/get')
-        .then(result => setTodos(result.data))
-        .catch(err => console.log(err))
-    }, [])
+        // Effectuez une requête GET pour obtenir la liste des tâches
+        fetch("http://localhost:3500/get")
+            .then((response) => {
+            if (!response.ok) {
+                throw new Error("Erreur lors de la requête");
+            }
+            return response.json();
+            })
+            .then((data) => setTodos(data))
+            .catch((err) => console.log(err));
+    }, []);
 
-    handleEdit((id) => {
-        axios.put('http://localhost:3500/update/'+id)
-        .then(result => {
-            location.reload
+    const handleEdit = (id) => {
+        // Effectuez une requête PUT pour mettre à jour la tâche
+        fetch("http://localhost:3500/update/" + id, {
+          method: "PUT",
         })
-        .catch(err => console.log(err))
-    })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erreur lors de la mise à jour de la tâche");
+            }
+            // Rechargez la page après une réponse réussie
+            window.location.reload();
+          })
+          .catch((err) => console.log(err));
+    };
 
-    handleDelete = (id) => {
-        axios.delete('http://localhost:3500/delete/'+id)
-        .then(result => {
-            location.reload
+      const handleDelete = (id) => {
+        // Effectuez une requête DELETE pour supprimer la tâche
+        fetch("http://localhost:3500/delete/" + id, {
+          method: "DELETE",
         })
-        .catch(err => console.log(err))
-    }
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erreur lors de la suppression de la tâche");
+            }
+            // Rechargez la page après une réponse réussie
+            window.location.reload();
+          })
+          .catch((err) => console.log(err));
+    };
 
     return (
         <div>
