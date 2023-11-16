@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 100px;
     width: 100%;
 }
 .task{
@@ -12,16 +13,22 @@
     border-bottom: 1px grey solid;
     width: 40%;
 }
-.task div{
+.task_card{
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    width: 100%;
 }
-.task div p{
-    margin-right: 30px;
+.task_card_btn{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
 }
 .task div p:nth-child(1){
     cursor: pointer;
+}
+.task div p:nth-child(2){
+    width: 60%;
 }

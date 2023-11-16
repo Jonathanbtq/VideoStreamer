@@ -8,7 +8,6 @@ function Home(){
 
     const addTask = (tasks) => {
       setTodos([...todos, tasks])
-      console.log(todos)
     }
 
     const handleUpdate = (index) => {
@@ -17,25 +16,32 @@ function Home(){
 
     useEffect(() => {
       // Effectuez une requête GET pour obtenir la liste des tâches
-      fetch("http://localhost:3500/get")
+      fetch("http://localhost:3500/get", {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
           .then((response) => {
-          if (!response.ok) {
-              throw new Error("Erreur lors de la requête");
-          }
-          return response.json();
+            if (!response.ok) {
+                throw new Error("Erreur lors de la requête");
+            }
+            return response.json();
+            })
+          .then((data) => {
+            setTodos(data)
           })
-          .then((data) => setTodos(data))
           .catch((err) => console.log(err));
     }, []);
 
     const handleEdit = (updatedTask) => {
-      console.log('test')
       // Effectuez une requête PUT pour mettre à jour la tâche
       setEditingIndex(null)
       fetch("http://localhost:3500/update/" + updatedTask.id, {
         method: "PUT",
         headers: {
-          "Content-Type": 'application.json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(updatedTask),
       })
@@ -83,13 +89,13 @@ function Home(){
                             updatedTodos[index] = { ...todo, task: updatedText };
                             setTodos(updatedTodos);
                           }}/>
-                          <button type="button" onClick={handleEdit(todos[index])}>Enregistrer</button>
+                          <button type="button" onClick={() => handleEdit(todos[index])}>Enregistrer</button>
                         </div>
                       ) : (
-                        <div>
+                        <div className='task_card'>
                             {todo.done ? <p>Test</p> : <p>o</p>}
                             <p>{todo.task}</p>
-                          <div>
+                          <div className='task_card_btn'>
                               <button type="button" onClick={() => handleDelete(todo.id)}>Delete</button>
                               <button type="button" onClick={() => handleUpdate(index)}>Modify</button>
                           </div>
